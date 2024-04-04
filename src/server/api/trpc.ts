@@ -10,6 +10,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
+import { revalidatePath } from "next/cache";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -26,6 +27,9 @@ import { db } from "~/server/db";
 
 interface CreateContextOptions {
   session: Session | null;
+  revalidateSSG: ((urlPath: string, opts?: {
+    unstable_onlyGenerated?: boolean | undefined;
+} | undefined) => Promise<void>) | null
 }
 
 /**
@@ -59,6 +63,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
   return createInnerTRPCContext({
     session,
+    revalidateSSG: res.revalidate
   });
 };
 
