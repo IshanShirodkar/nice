@@ -4,8 +4,11 @@
 import { useSession } from "next-auth/react";
 import { Button } from "./Button";
 import { ProfileImage } from "./ProfileImage";
-import { FormEvent, useCallback, useLayoutEffect, useRef, useState } from "react";
+import { type FormEvent, useCallback, useLayoutEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
+import sentiment from "sentiment"
+
+type AnalyzeSentimentFunction = (text: string) => Promise<string>;
 
 function updateTextAreaSize(textArea? : HTMLTextAreaElement) {
     if(textArea == null) return
@@ -16,11 +19,29 @@ function updateTextAreaSize(textArea? : HTMLTextAreaElement) {
 export function NewTweetForm() {
     const session = useSession();
     if(session.status !== "authenticated") return null;
+
+    const analyzeSentiment: AnalyzeSentimentFunction = async (text: string) => {
+        
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const Sentiment = require('sentiment');
+        const sentiment = new Sentiment();
+        const result = sentiment.analyze(text);
+
+        return result.score > 0 ? "positive" : "negative";
+    }
+
+    return <Form analyzeSentiment={analyzeSentiment} />;
+
+};
     
-    return <Form/>
+  
+
+interface FormProps {
+    analyzeSentiment: AnalyzeSentimentFunction;
 }
 
-function Form() {
+
+function Form({ analyzeSentiment }: FormProps) {
     const session = useSession();
     const [inputValue, setInputValue] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>();
@@ -28,6 +49,7 @@ function Form() {
         updateTextAreaSize(textArea);
         textAreaRef.current = textArea;
     }, [])
+    
 
     const trpcUtils = api.useUtils();
 
@@ -74,11 +96,18 @@ function Form() {
 
     if(session.status !== "authenticated") return null;
 
-    function handleSubmit(e: FormEvent) {
-        e.preventDefault()
+    async function handleSubmit(e: FormEvent) {
+        e.preventDefault();
+      
+          const sentiment = await analyzeSentiment(inputValue);
+          if (sentiment === "positive") {
+            createTweet.mutate({ content: inputValue });
+          } else {
+            alert("Please type something positive!");
+          }
+      }
+      
 
-        createTweet.mutate({content: inputValue})
-    }
     return <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b px-4 py-2">
         <div className="flex gap-4 ">
             <ProfileImage src = {session.data.user.image}/>
