@@ -15,10 +15,12 @@ import type {
   import { InfiniteTweetList } from "~/components/InfiniteTweetList";
   import { useSession } from "next-auth/react";
   import { Button } from "~/components/Button";
+  import { useDarkMode } from "~/styles/darkModeContext";
   
   const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     id,
   }) => {
+    const{darkMode} = useDarkMode();
     const { data: profile } = api.profile.getById.useQuery({ id });
     const tweets = api.tweet.infiniteProfileFeed.useInfiniteQuery(
       { userId: id },
@@ -46,10 +48,11 @@ import type {
   
     return (
       <>
+      <div className={darkMode? 'bg-gray-800 text-white min-h-screen font-sans' : 'bg-gray-50 text-gray-700 min-h-screen font-sans'}>
         <Head>
           <title>{`Twitter Clone - ${profile.name}`}</title>
         </Head>
-        <header className="sticky top-0 z-10 flex items-center border-b bg-white px-4 py-2">
+        <header className={darkMode? "sticky top-0 z-10 flex items-center border-b border-gray-600 px-4 py-7 " : "sticky top-0 z-10 flex items-center border-b px-4 py-2"}>
           <Link href=".." className="mr-2">
             <IconHoverEffect>
               <VscArrowLeft className="h-6 w-6" />
@@ -81,6 +84,7 @@ import type {
             fetchNewTweets={tweets.fetchNextPage}
           />
         </main>
+        </div>
       </>
     );
   };

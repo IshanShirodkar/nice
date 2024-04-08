@@ -7,6 +7,7 @@ import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 import { IconHoverEffect } from "./IconHoverEffect";
 import { api } from "~/utils/api";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { useDarkMode } from "~/styles/darkModeContext";
 
 type Tweet = {
     id: string,
@@ -55,6 +56,7 @@ function TweetCard ({
     likesCount, 
     likedByMe}: Tweet) {
 
+    const { darkMode } = useDarkMode();   
     const trpcUtils = api.useUtils()
     const toggleLike = api.tweet.toggleLike.useMutation({ onSuccess: ({addedLike}) => {
         const updateData: Parameters<typeof trpcUtils.tweet.infiniteFeed.setInfiniteData>[1] = (oldData) => {
@@ -90,7 +92,7 @@ function TweetCard ({
         toggleLike.mutate({ id })
     }
 
-    return <li className="flex gp-4 border-b px-4 py-4">
+    return <li className={darkMode? 'flex gp-4 border-b border-gray-600 px-4 py-5' : 'flex gp-4 border-b px-4 py-4'}>
     <Link href = {`/profiles/${user.id}`}>
         <ProfileImage src = {user.image}/>
     </Link>
@@ -103,18 +105,19 @@ function TweetCard ({
             <span className="text-gray-500">{dateTimeFormatter.format(createdAt)}</span>
         </div>
         <p className="whitespace-pre-wrap">{content}</p>
-        <HeartButton onClick = {handleToggleLike} likedByMe= {likedByMe} likeCount={likesCount}/>
+        <HeartButton onClick = {handleToggleLike} isLoading = {toggleLike.status === 'pending'} likedByMe= {likedByMe} likeCount={likesCount}/>
     </div>
     </li>
 }
 
 type HeartButtonProps = {
     onClick: () => void,
+    isLoading: boolean,
     likedByMe: boolean,
     likeCount: number
 }
 
-function HeartButton({likedByMe, likeCount, onClick}: HeartButtonProps) {
+function HeartButton({isLoading, likedByMe, likeCount, onClick}: HeartButtonProps) {
     const session = useSession();
     const HeartIcon = likedByMe ? VscHeartFilled : VscHeart
     
@@ -126,6 +129,7 @@ function HeartButton({likedByMe, likeCount, onClick}: HeartButtonProps) {
     }
     return (
         <button
+        disabled={isLoading}
         onClick = {onClick} 
         className= {`-ml-2 group items-center flex gap-1 transition-colors self-start duration-200 
         ${likedByMe 
@@ -137,7 +141,6 @@ function HeartButton({likedByMe, likeCount, onClick}: HeartButtonProps) {
         <HeartIcon className={`transition-colors duration-200 ${likedByMe 
             ? "fill-red-500" 
             : "fill-gray-500 group-hover:fill-red-500 group-focus-visible:fill-red-500"}`}/>
-        
         </IconHoverEffect>
         <span>{likeCount}</span>
         </button>

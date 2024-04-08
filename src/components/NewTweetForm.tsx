@@ -7,6 +7,7 @@ import { ProfileImage } from "./ProfileImage";
 import { type FormEvent, useCallback, useLayoutEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import sentiment from "sentiment"
+import { useDarkMode } from "~/styles/darkModeContext";
 
 type AnalyzeSentimentFunction = (text: string) => Promise<string>;
 
@@ -27,7 +28,7 @@ export function NewTweetForm() {
         const sentiment = new Sentiment();
         const result = sentiment.analyze(text);
 
-        return result.score > 0 ? "positive" : "negative";
+        return result.score > -1 ? "positive" : "negative";
     }
 
     return <Form analyzeSentiment={analyzeSentiment} />;
@@ -49,7 +50,7 @@ function Form({ analyzeSentiment }: FormProps) {
         updateTextAreaSize(textArea);
         textAreaRef.current = textArea;
     }, [])
-    
+    const {darkMode} = useDarkMode();
 
     const trpcUtils = api.useUtils();
 
@@ -108,7 +109,7 @@ function Form({ analyzeSentiment }: FormProps) {
       }
       
 
-    return <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-b px-4 py-2">
+    return <form onSubmit={handleSubmit} className={darkMode? "flex flex-col gap-2 border-b border-gray-600 px-4 py-2" : "flex flex-col gap-2 border-b px-4 py-2"}>
         <div className="flex gap-4 ">
             <ProfileImage src = {session.data.user.image}/>
             <textarea
@@ -116,7 +117,7 @@ function Form({ analyzeSentiment }: FormProps) {
              style = {{height: 0}}
              value = {inputValue}
              onChange= {(e) => setInputValue(e.target.value)}
-             className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none" placeholder="Type something nice!"/>
+             className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none bg-transparent" placeholder="Type something nice!"/>
         </div>
         <Button className="self-end">Tweet</Button>
     </form>
