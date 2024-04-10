@@ -1,29 +1,118 @@
-# Create T3 App
+# NICE: A Positive Twitter Clone
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Nice is a web based application crafted to infuse positivity and warmth into the realm of social media. Designed as a Twitter clone with a unique twist, Nice empowers users to share only uplifting and encouraging content, fostering an environment of kindness and support.
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Table of Contents
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- [About](#about)
+- [Technologies](#technologies)
+- [Features](#features)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Acknowledgments](#acknowledgments)
+- [Feedback](#feedback)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## About
 
-## Learn More
+In a world where negativity often dominates online interactions, Nice strives to be a safe haven for users to share uplifting content and connect with others in a supportive environment. Unlike traditional platforms, NICE cultivates a community where only the most inspiring and uplifting thoughts are shared. By encouraging users to focus on the bright side of life, NICE aims to elevate online discourse and promote genuine connections.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Technologies
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Nice leverages a robust stack of cutting-edge technologies to provide users with a seamless and feature-rich experience:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- **React**: As the foundation of the application, React powers the creation of dynamic and interactive user interfaces, enabling smooth and efficient rendering of components.
 
-## How do I deploy this?
+- **Next.js**: Next.js, a powerful React framework, enhances NICE with server-side rendering (SSR), static site generation (SSG), and simplified routing. This ensures optimal performance, improved SEO, and enhanced development workflows.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- **trpc**: Utilizing trpc, a TypeScript-based RPC framework, NICE facilitates efficient communication between the client and server, enabling seamless data fetching and server-side logic execution.
+
+- **TypeScript**: Leveraging TypeScript, a statically typed superset of JavaScript, NICE ensures robust type checking, enhanced code readability, and improved developer productivity throughout the development process.
+
+- **Tailwind CSS**: Tailwind CSS, a utility-first CSS framework, empowers NICE with a highly customizable and responsive design system. With Tailwind, developers can rapidly style components and create visually appealing interfaces.
+
+- **Prisma**: Integrating Prisma, a modern database toolkit, NICE simplifies database access and management, providing a reliable and efficient data layer for storing and retrieving application data.
+
+- **Discord OAuth2**: Seamlessly integrating Discord OAuth2 authentication, NICE enables users to authenticate using their Discord accounts, ensuring a secure and streamlined login experience.
+
+- **NeonDB**: A fully managed serverless Postgres that separates compute and storage to offer modern developer features such as autoscaling, branching, bottomless storage, and more.
+
+- **Sentiment Library**: The library currently used to filter out the negative tweets from the positive ones. Will be soon replaced by something more stricter and effecient at a larger scale.
+
+  
+
+## Features
+
+NICE boasts an array of features designed to promote positivity and facilitate meaningful interactions:
+
+- **Positive Content**: Users can exclusively share uplifting and affirmative content, fostering a community centered around kindness and encouragement.
+  
+- **Discord Login**: Seamlessly authenticate with Discord OAuth2, enabling users to access NICE using their existing Discord credentials with ease.
+  
+- **Dark Mode**: Toggle between light and dark modes for optimal viewing comfort, ensuring a visually pleasing experience regardless of ambient lighting conditions.
+  
+- **Image Posting (Coming Soon)**: Soon, users will have the ability to complement their tweets with captivating images, adding depth and richness to their messages.
+
+
+## Installation
+
+To run Nice on your local machine, follow these steps:
+
+Clone the repository 
+```bash
+git clone https://github.com/IshanShirodkar/nice
+```
+
+Go to the project directory
+
+```bash
+  cd nice
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Start the development server
+```bash
+npm run dev
+```
+
+Usage
+Once the development server is running, you can access Nice in your web browser at http://localhost:3000/.
+
+
+## Contributing
+If you would like to contribute to Nice, please follow these steps:
+
+Fork the repository
+
+Create a new branch:
+```bash
+git checkout -b my-new-branch
+```
+
+Make your changes and commit them
+```bash
+git commit -am 'Add some feature'
+```
+
+Push to the branch
+```bash
+git push origin my-new-branch
+```
+
+Create a new pull request
+
+
+## Acknowledgments 
+Nice being a twitter clone was heavily inspired by Twitter. The tech stack used was T3 and the idea was inspired by Theo's twitter clone. WebDevSimplified is another resource that was used for guidance while building this project.
+
+
+## Feedback
+We genuinely value your feedback as it serves as a cornerstone for the ongoing enhancement of this project. Your thoughtful insights and suggestions are highly appreciated and will be instrumental in guiding the future development efforts.
+
+
+Let's spread positivity and kindness, one tweet at a time, with NICE! 🌟 
