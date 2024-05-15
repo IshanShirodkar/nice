@@ -17,6 +17,12 @@ Nice is a web based application crafted to infuse positivity and warmth into the
 
 In a world where negativity often dominates online interactions, Nice strives to be a safe haven for users to share uplifting content and connect with others in a supportive environment. Unlike traditional platforms, NICE cultivates a community where only the most inspiring and uplifting thoughts are shared. By encouraging users to focus on the bright side of life, NICE aims to elevate online discourse and promote genuine connections.
 
+
+## DEMO
+
+[Nice](https://nice-p1flliz2d-ishans-projects-92b2b9e1.vercel.app)
+
+
 ## Technologies
 
 Nice leverages a robust stack of cutting-edge technologies to provide users with a seamless and feature-rich experience:
